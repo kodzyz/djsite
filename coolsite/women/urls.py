@@ -3,7 +3,8 @@ from .views import *
 
 urlpatterns = [
 
-    path('', index), # /women/
-    path('cats/', categories), # /women/cats/
+    path('', index), # /
+    path('cats/<slug:cat>/', categories), # /cats/ASCII/
+    path('archive/<slug:year>/', archive),
 
 ]
