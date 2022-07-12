@@ -3,7 +3,7 @@ from .views import *
 
 urlpatterns = [
 
-    path('', index),  # /
+    path('home/', index, name='home'),  # уникальное имя для URL
     path('cats/<slug:cat>/', categories),  # /cats/ASCII/
     path('archive/<slug:year>/', archive),
 
