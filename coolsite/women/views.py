@@ -21,6 +21,6 @@ def pageNotFound(request, exception):
 
 def archive(request, year):
     if int(year) > 2020:
-        return redirect('home', permanent=True)  # неявный URL
+        return redirect('home', permanent=True)
 
     return HttpResponse(f'<h1>Архив по годам</h1>{year}</p>')
