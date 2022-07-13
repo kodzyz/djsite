@@ -1,17 +1,22 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotFound, Http404
+from .models import *
+
+menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
 
 
 def index(request):
-    return HttpResponse("Страница приложения women.")
+    posts = Women.objects.all()
+    return render(request, 'women/index.html', {'posts': posts, 'menu': menu, 'title': 'Главная страница'})
+
+
+def about(request):
+    return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
 def categories(request, cat):
     if request.GET:
         print(request.GET)
-    # http://127.0.0.1:8000/cats/music/?name=Gagarina&type=pop ->
-    # -> QueryDict: {'name': ['Gagarina'], 'type': ['pop']}
-
     return HttpResponse(f'<h1>Статьи по категориям</h1><p>{cat}</p>')
 
 
