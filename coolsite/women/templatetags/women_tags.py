@@ -5,7 +5,6 @@ from women.models import *
 register = template.Library()
 
 
-# делаем ф-ю простым тегом
-@register.simple_tag()  # связывание ф-и с тегом декоратором
-def get_categories():  # ф-я для работы простого тега
+@register.simple_tag(name='getcats')
+def get_categories():
     return Category.objects.all()
