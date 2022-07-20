@@ -40,7 +40,7 @@
 		<li><a href="{% url 'home' %}">Все категории</a></li>
 {% endif %}
 
-{% show_categories '-name' cat_selected %}  <!-- сортировка по '-name'  и передача параметра 'cat_selected' тегу -->
+{% show_categories cat_selected=cat_selected %}
 
 		<li class="share">
 		<p>Наш канал</p>
