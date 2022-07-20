@@ -33,7 +33,6 @@
 <tr>
 <!-- Sidebar слева -->
 	<td valign="top" class="left-chapters">
-		{% getcats 2 %}  <!-- передача первого параметра -->
 	<ul id="leftchapters">
 {% if cat_selected == 0 %}
 		<li class="selected">Все категории</li>
@@ -41,7 +40,7 @@
 		<li><a href="{% url 'home' %}">Все категории</a></li>
 {% endif %}
 
-{% show_categories %}  <!-- включающий тег -->
+{% show_categories '-name' cat_selected %}  <!-- сортировка по '-name'  и передача параметра 'cat_selected' тегу -->
 
 		<li class="share">
 		<p>Наш канал</p>
