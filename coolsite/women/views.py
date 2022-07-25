@@ -29,11 +29,16 @@ def about(request):
 
 
 def addpage(request):
-    if request.method == 'POST':  # если пришел POST-запрос, значит, пользователем были отправлены данные
-        form = AddPostForm(request.POST)  # наполняем форму принятыми значениями из объекта request.POST
-        if form.is_valid():  # проверку на корректность заполнения полей
-            print(form.cleaned_data)  # словарь form.cleaned_data полученных данных от пользователя
-    else:  #  а если форма показывается первый раз (идем по else), то она формируется без параметров с пустыми полями
+    if request.method == 'POST':
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            try:
+                Women.objects.create(**form.cleaned_data)  # передаем методу create распакованный словарь полученных данных
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления поста')
+    else:
         form = AddPostForm()
     return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})
 
