@@ -12,7 +12,7 @@ class AddPostForm(forms.ModelForm):
     class Meta:
         model = Women  # связь формы с моделью
         # fields = '__all__'  # все поля # в результате увидим готовую форму
-        fields = ['title', 'slug', 'content', 'is_published', 'cat']  # рекомендуется явно указывать список полей
+        fields = ['title', 'slug', 'content', 'photo', 'is_published', 'cat']  # рекомендуется явно указывать список полей
         widgets = {  # стили оформления для каждого поля
             'title': forms.TextInput(attrs={'class': 'form-input'}),
             'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),  # 60 колонок 10 строчек

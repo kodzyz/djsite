@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ title }}</h1>
 
-<form action="{% url 'add_page' %}" method="post">
+<form action="{% url 'add_page' %}" method="post" enctype="multipart/form-data"> <!-- обязательный, в случае передачи каких-либо файлов совместно с данными полей -->
     {% csrf_token %}
 
     <div class="form-error">{{ form.non_field_errors }}</div>
