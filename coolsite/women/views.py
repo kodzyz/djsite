@@ -33,11 +33,8 @@ def addpage(request):
         form = AddPostForm(request.POST)
         if form.is_valid():
             # print(form.cleaned_data)
-            try:
-                Women.objects.create(**form.cleaned_data)  # передаем методу create распакованный словарь полученных данных
-                return redirect('home')
-            except:
-                form.add_error(None, 'Ошибка добавления поста')
+            form.save()  # когда форма связана с моделью используем методы модели
+            return redirect('home')
     else:
         form = AddPostForm()
     return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})

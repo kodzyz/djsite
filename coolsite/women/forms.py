@@ -2,11 +2,18 @@ from django import forms
 from .models import *
 
 
-class AddPostForm(forms.Form):
-    title = forms.CharField(max_length=255, label='Заголовок', widget=forms.TextInput(attrs={'class': 'form-input'}))  # стили оформлений можно прописать непосредственно в классе формы
-    slug = forms.SlugField(max_length=255, label='URL')
-    content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}), label='Контент',
-                              required=False)
-    is_published = forms.BooleanField(label='Публикация', initial=True)
-    cat = forms.ModelChoiceField(queryset=Category.objects.all(), label='Категории',
-                                 empty_label='Категория не выбрана')
+class AddPostForm(forms.ModelForm):
+    # у списка установить свойство: empty_label = "Категория не выбрана"
+    def __init__(self, *args, **kwargs):  # конструктор у класса формы
+        super().__init__(*args, **kwargs)
+        self.fields['cat'].empty_label = "Категория не выбрана"  # присвоим атрибуту empty_label нужное значение
+        # так же в нашей форме появились и методы базового класса - метод save()
+
+    class Meta:
+        model = Women  # связь формы с моделью
+        # fields = '__all__'  # все поля # в результате увидим готовую форму
+        fields = ['title', 'slug', 'content', 'is_published', 'cat']  # рекомендуется явно указывать список полей
+        widgets = {  # стили оформления для каждого поля
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),  # 60 колонок 10 строчек
+        }
