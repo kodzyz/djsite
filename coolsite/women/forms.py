@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from .models import *
 
 
@@ -17,3 +19,10 @@ class AddPostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-input'}),
             'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),  # 60 колонок 10 строчек
         }
+    #  пользовательские валидаторы
+    def clean_title(self):  # обычные методы, имена которых начинаются с префикса clean_
+        title = self.cleaned_data['title']  # считываем заголовок, переданный из формы, из словаря очищенных данных cleaned_data
+        if len(title) > 200:
+            raise ValidationError('Длина превышает 200 символов')
+
+        return title
