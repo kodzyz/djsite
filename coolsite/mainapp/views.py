@@ -86,3 +86,25 @@ class ArticleCustomViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
     queryset = Article.objects.all()
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ArticleSerializer
+
+class ArticleQuerysetFilterViewSet(viewsets.ModelViewSet): #актуально и для других Views и Viewset
+    serializer_class = ArticleSerializer
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
+    queryset = Article.objects.all()
+
+    def get_queryset(self): #переопределив get_queryset, можем пользоваться методом filter
+        return Article.objects.filter(name__contains='python') #фильтруем- имя должно содержать слово python
+
+
+
+
+
+
+
+
+
+
+
+
+
+
