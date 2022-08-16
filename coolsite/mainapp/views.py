@@ -74,4 +74,7 @@ class ArticleViewSet(viewsets.ViewSet): #обработка сразу неск�
         serializer = ArticleSerializer(article)
         return Response(serializer.data) #/viewsets/base/1/
 
-
+class ArticleModelViewSet(viewsets.ModelViewSet): # все REST API-запросы
+    queryset = Article.objects.all()
+    renderer_classes = [JSONRenderer]
+    serializer_class = ArticleSerializer
