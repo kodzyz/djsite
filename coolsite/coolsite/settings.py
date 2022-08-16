@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'women.apps.WomenConfig',  # прописать так для работы verbose_name = 'Женщины мира'
+
+    'rest_framework',
+
+    'mainapp.apps.MainappConfig',
 ]
 
 MIDDLEWARE = [

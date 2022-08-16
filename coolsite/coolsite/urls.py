@@ -20,6 +20,13 @@ from django.urls import path, include
 from coolsite import settings
 from women.views import *
 
+from mainapp import views
+from mainapp.views import *
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('base', views.ArticleViewSet, basename='article') # укажите basename при регистрации в роутере
+
 handler404 = pageNotFound
 
 urlpatterns = [
@@ -27,6 +34,18 @@ urlpatterns = [
 
     #women
     path('', include('women.urls')),
+
+    #mainapp
+    path('views/api-view/', views.ArticleAPIView.as_view()),
+    path('article_view/', article_view),
+
+    path('generics/create/', views.ArticleCreateAPIView.as_view()),
+    path('generics/list/', views.ArticleListAPIView.as_view()),
+    path('generics/retrieve/<int:pk>/', views.ArticleRetrieveAPIView.as_view()),
+    path('generics/delete/<int:pk>/', views.ArticleDestroyAPIView.as_view()),
+    path('generics/update/<int:pk>/', views.ArticleUpdateAPIView.as_view()),
+
+    path('viewsets/', include(router.urls)),
 
 ]
 
