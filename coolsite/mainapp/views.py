@@ -17,6 +17,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 #Custom ViewSet
 from rest_framework import mixins
+# filters.py
+from .filters import ArticleFilter
 
 class ArticleAPIView(APIView):
     renderer_classes = [JSONRenderer]  #список Renderers
@@ -113,7 +115,16 @@ class ArticleParamFilterView(viewsets.ModelViewSet):
             articles = articles.filter(name__contains=name)
         return articles  #/filters/param/?name=name #GET, POST
 
+class ArticleDjangoFilterViewSet(viewsets.ModelViewSet): # или VIew
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filterset_fields = ['name', 'user'] # поля по фильтрации # данные как параметры запроса
 
+class ArticleCustomDjangoFilterViewSet(viewsets.ModelViewSet):
+    #/filters/custom_filter_param/?name=name
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filterset_class = ArticleFilter
 
 
 

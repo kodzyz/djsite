@@ -29,6 +29,8 @@ router.register('base', views.ArticleViewSet, basename='article') # укажит
 
 filter_router = DefaultRouter()
 filter_router.register('param', views.ArticleParamFilterView)
+filter_router.register('django_filter_param', views.ArticleDjangoFilterViewSet)
+filter_router.register('custom_filter_param', views.ArticleCustomDjangoFilterViewSet)
 
 handler404 = pageNotFound
 
