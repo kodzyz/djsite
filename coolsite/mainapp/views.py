@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.renderers import JSONRenderer
+from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from .models import Article
 from .serializers import ArticleSerializer
 from rest_framework.response import Response  # из DRF
@@ -15,6 +15,8 @@ from  rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 #Доп. действия
 from rest_framework.decorators import action
+#Custom ViewSet
+from rest_framework import mixins
 
 class ArticleAPIView(APIView):
     renderer_classes = [JSONRenderer]  #список Renderers
@@ -77,4 +79,10 @@ class ArticleViewSet(viewsets.ViewSet): #обработка сразу неск�
 class ArticleModelViewSet(viewsets.ModelViewSet): # все REST API-запросы
     queryset = Article.objects.all()
     renderer_classes = [JSONRenderer]
+    serializer_class = ArticleSerializer
+
+class ArticleCustomViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
+                            mixins.ListModelMixin, viewsets.GenericViewSet): #GenericViewSet + нужные классы примеси для запросов REST API #через Router
+    queryset = Article.objects.all()
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ArticleSerializer
