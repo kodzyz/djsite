@@ -102,7 +102,16 @@ class ArticleKwargsFilterView(ListAPIView):
         name = self.kwargs['name'] # берётся по ключу
         return Article.objects.filter(name__contains=name)
 
+class ArticleParamFilterView(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
+    def get_queryset(self):
+        name = self.request.query_params.get('name','')
+        articles = Article.objects.all()
+        if name:
+            articles = articles.filter(name__contains=name)
+        return articles  #/filters/param/?name=name #GET, POST
 
 
 

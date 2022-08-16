@@ -27,6 +27,9 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register('base', views.ArticleViewSet, basename='article') # укажите basename при регистрации в роутере
 
+filter_router = DefaultRouter()
+filter_router.register('param', views.ArticleParamFilterView)
+
 handler404 = pageNotFound
 
 urlpatterns = [
@@ -48,6 +51,9 @@ urlpatterns = [
     path('viewsets/', include(router.urls)),
 
     path('filters/kwargs/<str:name>/', views.ArticleKwargsFilterView.as_view()),
+
+    path('filters/', include(filter_router.urls)),
+
 
 ]
 
