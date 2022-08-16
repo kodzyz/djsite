@@ -20,6 +20,8 @@ from django.urls import path, include
 from coolsite import settings
 from women.views import *
 
+from mainapp import views
+
 handler404 = pageNotFound
 
 urlpatterns = [
@@ -27,6 +29,10 @@ urlpatterns = [
 
     #women
     path('', include('women.urls')),
+
+    #mainapp
+    path('views/api-view/', views.ArticleAPIView.as_view()),
+
 
 ]
 
