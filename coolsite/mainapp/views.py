@@ -13,6 +13,8 @@ from  rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 #создавать набор данных и прописывать методы
 from  rest_framework import viewsets
 from django.shortcuts import get_object_or_404
+#Доп. действия
+from rest_framework.decorators import action
 
 class ArticleAPIView(APIView):
     renderer_classes = [JSONRenderer]  #список Renderers
@@ -56,15 +58,20 @@ class ArticleUpdateAPIView(UpdateAPIView): #   put и patch по pk
 
 class ArticleViewSet(viewsets.ViewSet): #обработка сразу нескольких REST-запросов #использовать Router
     renderer_classes = [JSONRenderer]
+    # свой метод
+    @action(detail=True, methods=['get']) # выдавать не всю информацию , а только её текст
+    def article_text_only(self, request, pk=None):
+        article = get_object_or_404(Article, pk=pk)
+        return Response({'article.text': article.text}) # /viewsets/base/1/article_text_only/
 
     def list(self, request): #get-набора данных
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data) #/viewsets/base/
 
     def retrieve(self, request, pk=None): # get-информации об одном объекте
         article = get_object_or_404(Article, pk=pk)
         serializer = ArticleSerializer(article)
-        return Response(serializer.data)
+        return Response(serializer.data) #/viewsets/base/1/
 
 
