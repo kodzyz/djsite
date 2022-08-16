@@ -10,6 +10,9 @@ from rest_framework.decorators import api_view, renderer_classes
 #При добавлении некоторых классов примесей (mixins) и использования GenericAPIView можно
 #получить конкретные классы для той или иной задачи (REST-запроса)
 from  rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
+#создавать набор данных и прописывать методы
+from  rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 
 class ArticleAPIView(APIView):
     renderer_classes = [JSONRenderer]  #список Renderers
@@ -51,6 +54,17 @@ class ArticleUpdateAPIView(UpdateAPIView): #   put и patch по pk
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
+class ArticleViewSet(viewsets.ViewSet): #обработка сразу нескольких REST-запросов #использовать Router
+    renderer_classes = [JSONRenderer]
 
+    def list(self, request): #get-набора данных
+        articles = Article.objects.all()
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None): # get-информации об одном объекте
+        article = get_object_or_404(Article, pk=pk)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
 
 

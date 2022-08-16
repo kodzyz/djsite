@@ -22,6 +22,10 @@ from women.views import *
 
 from mainapp import views
 from mainapp.views import *
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('base', views.ArticleViewSet, basename='article') # укажите basename при регистрации в роутере
 
 handler404 = pageNotFound
 
@@ -40,6 +44,8 @@ urlpatterns = [
     path('generics/retrieve/<int:pk>/', views.ArticleRetrieveAPIView.as_view()),
     path('generics/delete/<int:pk>/', views.ArticleDestroyAPIView.as_view()),
     path('generics/update/<int:pk>/', views.ArticleUpdateAPIView.as_view()),
+
+    path('viewsets/', include(router.urls)),
 
 ]
 
