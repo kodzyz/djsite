@@ -131,7 +131,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# use django-filter по умолчанию
+
 REST_FRAMEWORK = {
-'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+# use django-filter по умолчанию
+'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+#Постраничный вывод на основе номера страницы(Pagination) по умолчанию для всех Views и Viewsets
+'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+'PAGE_SIZE': 5 #  записей на одной странице
 }
+
