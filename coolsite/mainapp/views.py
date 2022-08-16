@@ -95,6 +95,12 @@ class ArticleQuerysetFilterViewSet(viewsets.ModelViewSet): #актуально �
     def get_queryset(self): #переопределив get_queryset, можем пользоваться методом filter
         return Article.objects.filter(name__contains='python') #фильтруем- имя должно содержать слово python
 
+class ArticleKwargsFilterView(ListAPIView):
+    serializer_class = ArticleSerializer
+# вводить данные для фильтрации через url
+    def get_queryset(self):
+        name = self.kwargs['name'] # берётся по ключу
+        return Article.objects.filter(name__contains=name)
 
 
 

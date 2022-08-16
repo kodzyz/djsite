@@ -47,6 +47,8 @@ urlpatterns = [
 
     path('viewsets/', include(router.urls)),
 
+    path('filters/kwargs/<str:name>/', views.ArticleKwargsFilterView.as_view()),
+
 ]
 
 if settings.DEBUG:
