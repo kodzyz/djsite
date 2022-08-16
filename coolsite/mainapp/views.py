@@ -7,6 +7,9 @@ from rest_framework.response import Response  # из DRF
 from rest_framework.views import APIView
 #@api_view
 from rest_framework.decorators import api_view, renderer_classes
+#При добавлении некоторых классов примесей (mixins) и использования GenericAPIView можно
+#получить конкретные классы для той или иной задачи (REST-запроса)
+from  rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
 
 class ArticleAPIView(APIView):
     renderer_classes = [JSONRenderer]  #список Renderers
@@ -22,3 +25,32 @@ def article_view(request):
     articles = Article.objects.all()
     serializer = ArticleSerializer(articles, many=True)
     return Response(serializer.data)
+
+class ArticleCreateAPIView(CreateAPIView): #  метод post
+    renderer_classes = [JSONRenderer]
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+class ArticleListAPIView(ListAPIView): #  метод get  список данных
+    renderer_classes = [JSONRenderer]
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+class ArticleRetrieveAPIView(RetrieveAPIView): # метод get об одном объекте требуется pk
+    renderer_classes = [JSONRenderer]
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+class ArticleDestroyAPIView(DestroyAPIView): #  метод delete по pk
+    renderer_classes = [JSONRenderer]
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+class ArticleUpdateAPIView(UpdateAPIView): #   put и patch по pk
+    renderer_classes = [JSONRenderer]
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+
+
+

@@ -21,7 +21,7 @@ from coolsite import settings
 from women.views import *
 
 from mainapp import views
-from mainapp.views import article_view
+from mainapp.views import *
 
 handler404 = pageNotFound
 
@@ -34,6 +34,12 @@ urlpatterns = [
     #mainapp
     path('views/api-view/', views.ArticleAPIView.as_view()),
     path('article_view/', article_view),
+
+    path('generics/create/', views.ArticleCreateAPIView.as_view()),
+    path('generics/list/', views.ArticleListAPIView.as_view()),
+    path('generics/retrieve/<int:pk>/', views.ArticleRetrieveAPIView.as_view()),
+    path('generics/delete/<int:pk>/', views.ArticleDestroyAPIView.as_view()),
+    path('generics/update/<int:pk>/', views.ArticleUpdateAPIView.as_view()),
 
 ]
 
