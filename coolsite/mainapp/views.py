@@ -19,6 +19,8 @@ from rest_framework.decorators import action
 from rest_framework import mixins
 # filters.py
 from .filters import ArticleFilter
+#LimitOffsetPagination
+from rest_framework.pagination import LimitOffsetPagination
 
 class ArticleAPIView(APIView):
     renderer_classes = [JSONRenderer]  #список Renderers
@@ -126,7 +128,13 @@ class ArticleCustomDjangoFilterViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     filterset_class = ArticleFilter
 
+class ArticleLimitOffsetPagination(LimitOffsetPagination):
+    default_limit = 2 # сколько записей по умолчанию будет выводиться
 
+class ArticleLimitOffsetPaginationViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    pagination_class = ArticleLimitOffsetPagination #/pagination/limitoffset/?limit=2&offset=2
 
 
 
